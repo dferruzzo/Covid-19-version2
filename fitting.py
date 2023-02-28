@@ -82,11 +82,13 @@ def fitting(theta_coef, dados, salvar_figs=True):
 
     # Cálculo do erro médio quadrático
     print('Mean Squared Error: ', mean(((casos / tot_pop)- sol[:,2])**2 ))
-
     ss_res = dot(((casos / tot_pop)- sol[:,2]),((casos / tot_pop)- sol[:,2]))
     ymean = mean(casos / tot_pop)
     ss_tot = dot(((casos / tot_pop)-ymean),((casos / tot_pop)-ymean))
     print('Mean R :', 1-ss_res/ss_tot)
+
+    # TODO [ ]: (28/02/2023) Colocar o RMSE e o Mean R na saída para salvar os dados.
+
     # ---------------------------------------------------------------------------------------------
     # print('sol shape =', sol.shape)
     # print('Num. Casos =', dados['Casos'].size)
