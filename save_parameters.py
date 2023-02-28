@@ -1,18 +1,17 @@
 """
 Script para salvar dos parâmetros
 -----------------------------------------------------------------------
-Entrada: os coefiientes do polinômio theta obtinos pela função fit_isol
+Entrada: os coeficientes do polinômio theta obtidos pela função fit_isol
          e os coeficientes ajustados do modelo obtidos pela função 
          fitting.
          SÓ SALVA DOIS PARÂMETROS PARA THETA, THETA0 E THETA1.
          É A APROXIMAÇÃO DE PRIMEIRA ORDEM PARA THETA
-Saída: Arquivo csv com os parâmetros, o nome do arquivo é 'parametros-data.csv 
+Saída: Arquivo csv com os parâmetros, o nome do arquivo é 'parametros-data.csv' 
 
 """
 from parameters import *
 from pandas import DataFrame
 import time
-
 
 def save_parameters(theta_coeffs, param, x0, dados_fit):
     print('Salvando parametros...')

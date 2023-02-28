@@ -5,11 +5,12 @@ Entrada:
     ajuste para o índice de isolamento e dataframe de dados para fazer o ajuste
 Saída:
     popt : os parâmetros ajustados,
+    X0   : a condição inicial da simulação,
     pvoc : matriz das covariâncias,
     perr : desvio padrão para cada parâmetro
 """
 from parameters import *
-from numpy import array
+from numpy import array, mean, dot
 from numpy.random import uniform
 import scipy.optimize as optimize
 from myfunctions import f, rk4, rhs
@@ -17,8 +18,7 @@ from numpy import sqrt, diag, min, max
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-# TODO: [DONE] Melhorar esse chute inicial, é possível utilizar um método melhor, talvez random
-# TODO: [DONE] A condição inicial do fitting deve ser compatível com os dados.
+    # TODO: 1. Calcular o erro quadrático médio no ajuste de parâmetros e na figura 6
 
 def fitting(theta_coef, dados, salvar_figs=True):
     N = dados['Casos'].size # <- número de iterações
@@ -59,9 +59,11 @@ def fitting(theta_coef, dados, salvar_figs=True):
     # organizando os parâmetros
     p0 = array([gamma_0, alpha_0, beta1_0, beta2_0, beta3_0, i0_0])
     # a otimização
+    # ------------
     print('Rodando otimização...')
     f_adj = lambda x, gamma, alpha, beta1, beta2, beta3, i: f(x, gamma, alpha, beta1, beta2, beta3, i, s0_0, sick0, theta_coef, mu, N)
     popt, pvoc = optimize.curve_fit(f_adj, tempo, casos / tot_pop, p0, sigma, absolute_sigma, check_finite, bounds, method, jac)
+    #
     gamma = popt[0]
     alpha = popt[1]
     beta1 = popt[2]
@@ -77,6 +79,15 @@ def fitting(theta_coef, dados, salvar_figs=True):
     tf = N - 1
     h = 1
     t, sol = rk4(lambda t, x: rhs(t, x, mu, gamma, alpha, theta_coef, beta1, beta2, beta3),x0, t0, tf, h)
+
+    # Cálculo do erro médio quadrático
+    print('Mean Squared Error: ', mean(((casos / tot_pop)- sol[:,2])**2 ))
+
+    ss_res = dot(((casos / tot_pop)- sol[:,2]),((casos / tot_pop)- sol[:,2]))
+    ymean = mean(casos / tot_pop)
+    ss_tot = dot(((casos / tot_pop)-ymean),((casos / tot_pop)-ymean))
+    print('Mean R :', 1-ss_res/ss_tot)
+    # ---------------------------------------------------------------------------------------------
     # print('sol shape =', sol.shape)
     # print('Num. Casos =', dados['Casos'].size)
     #plt.close('all')
@@ -95,6 +106,8 @@ def fitting(theta_coef, dados, salvar_figs=True):
        plt.savefig(filename,  bbox_inches='tight')
     plt.show()
     #
+    print('Matriz das covarianças')
+    print(pvoc)
     perr = sqrt(diag(pvoc))
     print('Desvio pardrão:')
     print('---------------')
