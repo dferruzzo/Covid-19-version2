@@ -10,17 +10,23 @@ Saída:
     perr : desvio padrão para cada parâmetro
 """
 from parameters import *
-from numpy import array, mean, dot
+from numpy import array, mean, dot, sqrt
 from numpy.random import uniform
 import scipy.optimize as optimize
 from myfunctions import f, rk4, rhs
 from numpy import sqrt, diag, min, max
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import pprint
 
-    # TODO: 1. Calcular o erro quadrático médio no ajuste de parâmetros e na figura 6
+# TODO: 1. Calcular o erro quadrático médio no ajuste de parâmetros e na figura 6
 
-def fitting(theta_coef, dados, salvar_figs=True):
+def fitting(dados_fit_isol, dados, salvar_figs=True):
+    #
+    print('\nIniciando ajuste de parâmetros')
+    print('------------------------------\n')
+    #
+    theta_t = dados_fit_isol['theta(t)']    # função polinomial que depende de t
     N = dados['Casos'].size # <- número de iterações
     tempo = dados['Idx'].to_numpy()
     casos = dados['Casos'].to_numpy()
@@ -55,14 +61,15 @@ def fitting(theta_coef, dados, salvar_figs=True):
     beta3_0 = uniform(beta3_min, beta3_max)
     i0_0 = uniform(i0_min, i0_max)
     s0_0 = 1-i0_0-sick0-0.9*sick0 # Os recuperados no Brasil são de 90% dos casos confirmados, 0.8*Sick
-    print('S0_0=', s0_0)
+    #print('S0_0=', s0_0)
     # organizando os parâmetros
     p0 = array([gamma_0, alpha_0, beta1_0, beta2_0, beta3_0, i0_0])
     # a otimização
     # ------------
     print('Rodando otimização...')
-    f_adj = lambda x, gamma, alpha, beta1, beta2, beta3, i: f(x, gamma, alpha, beta1, beta2, beta3, i, s0_0, sick0, theta_coef, mu, N)
+    f_adj = lambda x, gamma, alpha, beta1, beta2, beta3, i: f(x, gamma, alpha, beta1, beta2, beta3, i, s0_0, sick0, theta_t, mu, N)
     popt, pvoc = optimize.curve_fit(f_adj, tempo, casos / tot_pop, p0, sigma, absolute_sigma, check_finite, bounds, method, jac)
+    perr = sqrt(diag(pvoc))
     #
     gamma = popt[0]
     alpha = popt[1]
@@ -72,23 +79,27 @@ def fitting(theta_coef, dados, salvar_figs=True):
     i0 = popt[5]
     s0 = 1-i0-sick0
     x0 = array([s0, i0, sick0])
-    print('x0 =',x0)
+    #print('x0 =',x0)
     # rodando Runge-Kutta de 4ta ordem de passo fixo. Testando o ajuste
     # parameters
     t0 = 0
     tf = N - 1
     h = 1
-    t, sol = rk4(lambda t, x: rhs(t, x, mu, gamma, alpha, theta_coef, beta1, beta2, beta3),x0, t0, tf, h)
+    t, sol = rk4(lambda t, x: rhs(t, x, mu, gamma, alpha, theta_t, beta1, beta2, beta3),x0, t0, tf, h)
 
-    # Cálculo do erro médio quadrático
-    print('Mean Squared Error: ', mean(((casos / tot_pop)- sol[:,2])**2 ))
+    # Cálculo do MSE e RMSE
+    MSE = mean(((casos / tot_pop)- sol[:,2])**2)
+    RMSE = sqrt(mean(((casos / tot_pop)- sol[:,2])**2 ))
+    #print('Mean Squared Error: ', MSE)
+    #print('Root Mean Squared Error: ', RMSE)
     ss_res = dot(((casos / tot_pop)- sol[:,2]),((casos / tot_pop)- sol[:,2]))
     ymean = mean(casos / tot_pop)
     ss_tot = dot(((casos / tot_pop)-ymean),((casos / tot_pop)-ymean))
-    print('Mean R :', 1-ss_res/ss_tot)
-
-    # TODO [ ]: (28/02/2023) Colocar o RMSE e o Mean R na saída para salvar os dados.
-
+    Mean_R = 1-ss_res/ss_tot
+    #print('Mean R :', Mean_R)
+    #
+    # TODO [DONE]: (28/02/2023) Colocar o RMSE, MSE na saída para salvar os dados.
+    #
     # ---------------------------------------------------------------------------------------------
     # print('sol shape =', sol.shape)
     # print('Num. Casos =', dados['Casos'].size)
@@ -108,22 +119,27 @@ def fitting(theta_coef, dados, salvar_figs=True):
        plt.savefig(filename,  bbox_inches='tight')
     plt.show()
     #
-    print('Matriz das covarianças')
-    print(pvoc)
-    perr = sqrt(diag(pvoc))
-    print('Desvio pardrão:')
-    print('---------------')
-    print(perr)
-    print('Parameters:')
-    print('-----------')
-    print('mu =', mu)
-    print('theta =', theta_coef)
-    print('gamma =', gamma)
-    print('alpha =', alpha)
-    print('beta1 =', beta1)
-    print('beta2 =', beta2)
-    print('beta3 =', beta3)
-    print('s0 =', s0)
-    print('i0 =', i0)
-    print('Ajuste finalizado... OK!')
-    return popt, x0, pvoc, perr
+    dados = {
+        'mu': mu,
+        'gamma': gamma,
+        'alpha': alpha,
+        'beta1': beta1,
+        'beta2': beta2,
+        'beta3': beta3,
+        'i0': i0,
+        's0': s0,
+        'sick0': sick0,
+        'N': N,
+        'pvoc': pvoc,       # matriz das covarianças dos coeffs.
+        'perr': perr,       # desvio padrão
+        'MSE': MSE,         # Mean Squared Error
+        'RMSE': RMSE,       # Root Mean Squared Error
+        'Mean_R': Mean_R,
+        'ss_res': ss_res,   # Residuo
+        'ss_tot':ss_tot     # Residuo total
+            }
+    print('\nDados após ajuste:\n')
+    pprint.pprint(dados, sort_dicts=False)
+    print('\nAjuste finalizado... OK!')
+    # pronto para entregar na saída o dicionário 'dados'
+    return dados

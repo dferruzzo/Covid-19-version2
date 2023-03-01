@@ -6,12 +6,12 @@ Entrada:
 Saída:
     Objeto polinômio com os coeficientes.
 """
-
+from parameters import *
 from numpy.polynomial import polynomial as poly
 from numpy import polynomial
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-
+import pprint
 
 def fit_isol(dados, order=2, salvar_figs=True) -> object:
     """
@@ -25,10 +25,13 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
     poly_order = order
     x = dados['Idx'].to_numpy()
     coefs, stats = poly.polyfit(x, dados['Isol'].to_numpy(), poly_order, full=True)
-    ffit = polynomial.Polynomial(coefs)
+
+    # cria uma função polynomial com os coeficientes 'coef' que pode ser avaliado diretamente como fitt(t), limitada a 'theta_min' e 'theta_max'
+    ffit = polynomial.Polynomial(coefs, domain=[x[0], x[-1]], window=[theta_min, theta_max])
+    
     plt.close('all')
     plt.plot(dados.index, dados['Isol'], 'o', label='Dados')
-    plt.plot(dados.index, ffit(dados['Idx'].to_numpy()), linewidth=3, label='Ajute de ordem ' + str(order))
+    plt.plot(dados.index, ffit(x), linewidth=3, label='Ajute de ordem ' + str(order))
     plt.ylim((0, 0.6))  # set the ylim to bottom, top
     plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=1))
     plt.title('Ajuste dos dados de isolamento')
@@ -40,11 +43,20 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
        filename = 'figures/ajuste_isolamento_'+timestr+'.png'
        plt.savefig(filename,  bbox_inches='tight')
     plt.show()
-    print('Coeficientes:')
-    print('-------------')
-    print(coefs)
-    print('Estatisticas:')
-    print('-------------')
-    print(stats)
-    print('Ajuste...OK!')
-    return ffit, stats, coefs
+    #
+    dados = {
+        'theta(t)': ffit,           # função polinomial que depende de 't' com os coeficientes
+        'Coeficientes': coefs,      # coeficientes do ajuste
+        'Residuos': stats[0],       # residuals – sum of squared residuals of the least squares fit
+        'rank': stats[1],           # rank – the numerical rank of the scaled Vandermonde matrix
+        'sing_values': stats[2],    # singular_values – singular values of the scaled Vandermonde matrix
+        'rcond': stats[3]           # Relative condition number of the fit.
+    }
+
+    #print('testando a função thets(t), t= ', x[0]-10, 'theta(t>t_max) =', ffit(x[0]-10))
+    
+    print('\nDados após ajuste do índice de isolamento:\n')
+    pprint.pprint(dados, sort_dicts=False)
+    print('\nAjuste do índice de isolamento finalizado... OK!')
+    # pronto para entregar na saída o dicionário 'dados'
+    return dados
