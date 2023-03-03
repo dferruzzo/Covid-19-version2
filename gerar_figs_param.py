@@ -13,37 +13,26 @@ from myfunctions import rhs, rk4
 from numpy import polynomial
 import time
 
+
 def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
     
-    mu = float(dados_din[dados_din['Nome']=='mu']['Valor'][0])
-    gamma = float(dados_din[dados_din['Nome']=='gamma']['Valor'][0])
-    alpha = float(dados_din[dados_din['Nome']=='alpha']['Valor'][0])
-    beta1 = float(dados_din[dados_din['Nome']=='beta1']['Valor'][0])
-    beta2 = float(dados_din[dados_din['Nome']=='beta2']['Valor'][0])
-    beta3 = float(dados_din[dados_din['Nome']=='beta3']['Valor'][0])
-    i0 = float(dados_din[dados_din['Nome']=='i0']['Valor'][0])
-    s0 = float(dados_din[dados_din['Nome']=='s0']['Valor'][0])
-    sick0 = float(dados_din[dados_din['Nome']=='sick0']['Valor'][0])
-    theta0 = float(dados_iso[dados_iso['Nome']=='Coeficientes']['Valor'][1][1:15])
-    #N = float(dados_din[dados_din['Nome']=='N']['Valor'][0])
-    #params_val = params_df['Valor'].to_numpy()
-    #mu = params_val[0]
-    #gamma = params_val[1]
-    #alpha = params_val[2]
-    #beta1 = params_val[3]
-    #beta2 = params_val[4]
-    #beta3 = params_val[5]
-
-    #theta0 = params_val[6]
-    theta1 = params_val[7]
-    #s0 = params_val[8]
-    #i0 = params_val[9]
-    #sick0 = params_val[10]
-    tot_pop = params_val[11]
+    mu = float(dados_din.loc['mu']['Valor'])
+    gamma = float(dados_din.loc['gamma']['Valor'])
+    alpha = float(dados_din.loc['alpha']['Valor'])
+    beta1 = float(dados_din.loc['beta1']['Valor'])
+    beta2 = float(dados_din.loc['beta2']['Valor'])
+    beta3 = float(dados_din.loc['beta3']['Valor'])
+    i0 = float(dados_din.loc['i0']['Valor'])
+    s0 = float(dados_din.loc['s0']['Valor'])
+    sick0 = float(dados_din.loc['sick0']['Valor'])
+    #
+    theta0 = float(dados_iso.loc['Coeficientes']['Valor'][1:15])
+    theta1 = float(dados_iso.loc['Coeficientes']['Valor'][16:30])
+    #
+    N = dados_para_val['Casos'].size
+    tot_pop = dados_para_val['Pop'].to_numpy()[0]
     theta_coef = polynomial.Polynomial([theta0, theta1])
-
-    N = dados_val['Casos'].size
-    #tot_pop = dados_fit['Pop'].to_numpy()[0]
+    #
     x0 = array([s0, i0, sick0])
     # 
     t0 = 0
@@ -54,9 +43,9 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
         x0, t0, tf, h)
     #
     plt.figure()
-    plt.plot(dados_val.index, dados_val['Casos'], 'o', label='Validation')
-    plt.plot(dados_fit.index, dados_fit['Casos'], 'o', label='Fitting')
-    plt.plot(dados_val.index, sol[:, 2] * tot_pop, linewidth=3, label='Model', color="forestgreen")
+    plt.plot(dados_para_val.index, dados_para_val['Casos'], 'o', label='Validation')
+    plt.plot(dados_para_fit.index, dados_para_fit['Casos'], 'o', label='Fitting')
+    plt.plot(dados_para_val.index, sol[:, 2] * tot_pop, linewidth=3, label='Model', color="forestgreen")
     plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=1))
     plt.ylabel('Confirmed cases')
     #plt.title('Número de casos')
@@ -69,8 +58,8 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     #plt.show()
     #
     plt.figure()
-    plt.plot(dados_fit.index, dados_fit['Isol'], 'o', label='Real data')
-    plt.plot(dados_fit.index, theta_coef(dados_fit['Idx'].to_numpy()), linewidth=3, label='First-order fitting')
+    plt.plot(dados_para_fit.index, dados_para_fit['Isol'], 'o', label='Real data')
+    plt.plot(dados_para_fit.index, theta_coef(dados_para_fit['Idx'].to_numpy()), linewidth=3, label='First-order fitting')
     plt.ylim((0, 0.6))  # set the ylim to bottom, top
     ##plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=1))
     plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=7))

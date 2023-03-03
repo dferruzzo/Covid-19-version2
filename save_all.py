@@ -14,7 +14,7 @@ from parameters import *
 import pandas as pd
 import time
 
-def save_all(dados_fit_isol, dados_fit_din):
+def save_all(dados_fit_isol, dados_fit_din, verifica=False):
     print('\nGuardando todos os dados...')
 
     # criando nome do arquivo para guardar os dados de ajuste do índice de isolamento e para os dados do ajuste da curva dos infectados
@@ -35,5 +35,8 @@ def save_all(dados_fit_isol, dados_fit_din):
     print('\nDados do ajuste dos dos parâmetros do sistema guardados no arquivo:')
     print(filename_din,'.csv')
     # 
-    # TODO [DONE]: (01/03/2023) Falta guardar a informação em arquivo.
+    if verifica:
+        # TODO [ ]: Escrever programa para verificar se após guardar e carregar todos os valores são os mesmos
+        dados_fit_isol, dados_fit_din = load_all(filename_iso, filename_din)
+        pass 
     return 

@@ -67,3 +67,4 @@ else:
     # TODO: [ ] 1.6 modificar função gerar figs_param para receber dois dicionarios
     # TODO: [ ] 1.7 modificar função simulations para receber dicionarios
     # TODO: [ ] 1.8 modificar função mapa1 para receber dicionarios
+    # 03/03/2023: Estou atiualizando o código em jupyter-lab. Preciso guardar os dados, carregar os dados e comparar se não tece perca de informação. Até o momento não parece que estou conseguindo.

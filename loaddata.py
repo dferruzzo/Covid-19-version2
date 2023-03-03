@@ -47,15 +47,15 @@ def loaddata() -> object:
     print('Data loaded...OK!')
     #
     # criando nome do arquivo para guardar os dados para ajuste e para validação
-    timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-    filename_fit = 'dados_para_fit-'+timestr+'.csv'
-    filename_val = 'dados_para_val-'+timestr+'.csv'
+    #timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
+    #filename_fit = 'dados_para_fit-'+timestr+'.csv'
+    #filename_val = 'dados_para_val-'+timestr+'.csv'
     #
-    dados_fit.to_csv(filename_fit)
-    dados_val.to_csv(filename_val)
+    #dados_fit.to_csv(filename_fit)
+    #dados_val.to_csv(filename_val)
     #
-    print('\nDados para ajuste guardados em:', filename_fit)
-    print('\nDados paravalidação guardados em:', filename_val)
-    print('\nOK.')
+    #print('\nDados para ajuste guardados em:', filename_fit)
+    #print('\nDados paravalidação guardados em:', filename_val)
+    #print('\nOK.')
     #
     return dados_fit, dados_val
