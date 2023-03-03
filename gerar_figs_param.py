@@ -13,20 +13,32 @@ from myfunctions import rhs, rk4
 from numpy import polynomial
 import time
 
-def gerar_figs_param(params_df, dados_fit, dados_val, salvar_figs=True):
-    #print('Param df:\n', params_df)
-    params_val = params_df['Valor'].to_numpy()
-    mu = params_val[0]
-    gamma = params_val[1]
-    alpha = params_val[2]
-    beta1 = params_val[3]
-    beta2 = params_val[4]
-    beta3 = params_val[5]
-    theta0 = params_val[6]
+def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
+    
+    mu = float(dados_din[dados_din['Nome']=='mu']['Valor'][0])
+    gamma = float(dados_din[dados_din['Nome']=='gamma']['Valor'][0])
+    alpha = float(dados_din[dados_din['Nome']=='alpha']['Valor'][0])
+    beta1 = float(dados_din[dados_din['Nome']=='beta1']['Valor'][0])
+    beta2 = float(dados_din[dados_din['Nome']=='beta2']['Valor'][0])
+    beta3 = float(dados_din[dados_din['Nome']=='beta3']['Valor'][0])
+    i0 = float(dados_din[dados_din['Nome']=='i0']['Valor'][0])
+    s0 = float(dados_din[dados_din['Nome']=='s0']['Valor'][0])
+    sick0 = float(dados_din[dados_din['Nome']=='sick0']['Valor'][0])
+    theta0 = float(dados_iso[dados_iso['Nome']=='Coeficientes']['Valor'][1][1:15])
+    #N = float(dados_din[dados_din['Nome']=='N']['Valor'][0])
+    #params_val = params_df['Valor'].to_numpy()
+    #mu = params_val[0]
+    #gamma = params_val[1]
+    #alpha = params_val[2]
+    #beta1 = params_val[3]
+    #beta2 = params_val[4]
+    #beta3 = params_val[5]
+
+    #theta0 = params_val[6]
     theta1 = params_val[7]
-    s0 = params_val[8]
-    i0 = params_val[9]
-    sick0 = params_val[10]
+    #s0 = params_val[8]
+    #i0 = params_val[9]
+    #sick0 = params_val[10]
     tot_pop = params_val[11]
     theta_coef = polynomial.Polynomial([theta0, theta1])
 

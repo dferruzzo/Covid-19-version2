@@ -1,4 +1,9 @@
 """
+NÃO ESTOU UTILIZANDO MAIS ESSA FUNÇÃO
+NÃO FUNCIONA
+DEIXADA AQUI APENAS COMO REFERÊNCIA DO QUE FOI FEITO
+NO LUGAR ESTOU UTILIZNADO A FUNÇÃO load_all.py
+
     Script para carregar parâmetros a partir de arquivo csv.
 
     Entrada: nome de arquivo csv.

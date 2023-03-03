@@ -1,4 +1,9 @@
 """
+NÃO ESTOU UTILIZANDO MAIS ESSA FUNÇÃO
+NÃO FUNCIONA
+DEIXADA AQUI APENAS COMO REFERÊNCIA DO QUE FOI FEITO
+NO LUGAR ESTOU UTILIZNADO A FUNÇÃO save_all.py
+#
 Script para salvar dos parâmetros
 -----------------------------------------------------------------------
 Entrada: os coeficientes do polinômio theta obtidos pela função fit_isol

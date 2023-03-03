@@ -9,7 +9,7 @@ Entrega dois data frames, cada um com três colunas: datas, isolamento, casos (d
 import pandas as pd
 from parameters import *
 from numpy import arange
-
+import time
 
 def loaddata() -> object:
     """
@@ -45,4 +45,17 @@ def loaddata() -> object:
     dados_val = pd.DataFrame(saopaulo_covid_df[data_val_ini:data_val_end])  # recorte dos dados para validação
     dados_val.rename(columns={"casos": "Casos", "obitos": "Obitos", "pop": "Pop"}, inplace=True)
     print('Data loaded...OK!')
+    #
+    # criando nome do arquivo para guardar os dados para ajuste e para validação
+    timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
+    filename_fit = 'dados_para_fit-'+timestr+'.csv'
+    filename_val = 'dados_para_val-'+timestr+'.csv'
+    #
+    dados_fit.to_csv(filename_fit)
+    dados_val.to_csv(filename_val)
+    #
+    print('\nDados para ajuste guardados em:', filename_fit)
+    print('\nDados paravalidação guardados em:', filename_val)
+    print('\nOK.')
+    #
     return dados_fit, dados_val
