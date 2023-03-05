@@ -45,8 +45,9 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
     plt.show()
     #
     dados = {
-        'theta(t)': ffit,           # função polinomial que depende de 't' com os coeficientes
-        'Coeficientes': coefs,      # coeficientes do ajuste
+        'theta(t)' : ffit,           # polinômio theta(t)
+        'theta0' : coefs[0],        # primeiro coeficiente do polinômio para theta(t)
+        'theta1' : coefs[1],        # segundo coeficiente do polinômio para theta(t)
         'Residuos': stats[0],       # residuals – sum of squared residuals of the least squares fit
         'rank': stats[1],           # rank – the numerical rank of the scaled Vandermonde matrix
         'sing_values': stats[2],    # singular_values – singular values of the scaled Vandermonde matrix

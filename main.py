@@ -1,3 +1,5 @@
+# (05/03/2023) Esse arquivo não é mais utilizado.
+# Utilizar o notebook *.ipynb
 from loaddata import *
 from fit_isol import *
 from fitting import *

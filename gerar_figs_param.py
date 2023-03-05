@@ -26,8 +26,8 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     s0 = float(dados_din.loc['s0']['Valor'])
     sick0 = float(dados_din.loc['sick0']['Valor'])
     #
-    theta0 = float(dados_iso.loc['Coeficientes']['Valor'][1:15])
-    theta1 = float(dados_iso.loc['Coeficientes']['Valor'][16:30])
+    theta0 = float(dados_iso.loc['theta0']['Valor'])
+    theta1 = float(dados_iso.loc['theta1']['Valor'])
     #
     N = dados_para_val['Casos'].size
     tot_pop = dados_para_val['Pop'].to_numpy()[0]
