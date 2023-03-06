@@ -227,19 +227,17 @@ def rhs(t, x, *p):
     beta2 = p[5]
     beta3 = p[6]
 
-    # Não é necessário limitar theta 
-    # limitar theta
-    #def theta_lim(t):
-    #    if theta(t) <= theta_min:
-    #        return theta_min
-    #    elif theta(t) >= theta_max:
-    #        return theta_max
-    #    else:
-    #        return theta(t)
+    def theta_lim(t):
+        if theta(t) <= theta_min:
+            return theta_min
+        elif theta(t) >= theta_max:
+            return theta_max
+        else:
+            return theta(t)
 
     #
-    return array([mu + gamma - alpha * (1 - theta(t)) * s * i - (mu + gamma) * s - gamma * i - gamma * sick,
-                  alpha * (1 - theta(t)) * s * i - (beta1 + beta2 + mu) * i,
+    return array([mu + gamma - alpha * (1 - theta_lim(t)) * s * i - (mu + gamma) * s - gamma * i - gamma * sick,
+                  alpha * (1 - theta_lim(t)) * s * i - (beta1 + beta2 + mu) * i,
                   beta2 * i - (beta3 + mu) * sick])
 
 

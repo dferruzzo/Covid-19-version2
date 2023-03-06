@@ -1,5 +1,5 @@
 """
-Data: 23/08/2022
+Data: 06/03/2023
 
 Script para realizar simulações do sistema com vacina
 com os parâmetros obtidos pelo ajuste feito.
@@ -14,21 +14,22 @@ from numpy import polynomial, trapz
 import time
 
 
-def simulations(params_df, salvar_figs=True):
-    params_val = params_df['Valor'].to_numpy()
-    mu = params_val[0]
-    gamma = params_val[1]
-    alpha = params_val[2]
-    beta1 = params_val[3]
-    beta2 = params_val[4]
-    beta3 = params_val[5]
-    theta0 = params_val[6]
-    theta1 = params_val[7]
-    s0 = params_val[8]
-    i0 = params_val[9]
-    sick0 = params_val[10]
-    tot_pop = params_val[11]
+def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
+    mu = float(dados_din.loc['mu']['Valor'])
+    gamma = float(dados_din.loc['gamma']['Valor'])
+    alpha = float(dados_din.loc['alpha']['Valor'])
+    beta1 = float(dados_din.loc['beta1']['Valor'])
+    beta2 = float(dados_din.loc['beta2']['Valor'])
+    beta3 = float(dados_din.loc['beta3']['Valor'])
+    i0 = float(dados_din.loc['i0']['Valor'])
+    s0 = float(dados_din.loc['s0']['Valor'])
+    sick0 = float(dados_din.loc['sick0']['Valor'])
+    #
+    theta0 = float(dados_iso.loc['theta0']['Valor'])
+    theta1 = float(dados_iso.loc['theta1']['Valor'])
     theta_coef = polynomial.Polynomial([theta0, theta1])
+    #
+    tot_pop = tot_pop = dados_para_val['Pop'].to_numpy()[0]
     #
     # Calcular theta_c e omega_min
     theta_c = 1-((beta1+beta2+mu)/alpha)
@@ -137,7 +138,7 @@ def simulations(params_df, salvar_figs=True):
     plt.ylabel('$s(t)$')
     if salvar_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-       filename = 'figures/sims_fase_'+timestr+'.png'
-       plt.savefig(filename,  bbox_inches='tight')
+       filename = 'figures/sims_fase_'+timestr+'.eps'
+       plt.savefig(filename, format='eps', bbox_inches='tight')
     plt.show()
     return None

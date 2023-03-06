@@ -27,17 +27,21 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
     coefs, stats = poly.polyfit(x, dados['Isol'].to_numpy(), poly_order, full=True)
 
     # cria uma função polynomial com os coeficientes 'coef' que pode ser avaliado diretamente como fitt(t), limitada a 'theta_min' e 'theta_max'
-    ffit = polynomial.Polynomial(coefs, domain=[x[0], x[-1]], window=[theta_min, theta_max])
+    #ffit = polynomial.Polynomial(coefs, domain=[x[0], x[-1]], window=[theta_min, theta_max])
+    ffit = polynomial.Polynomial(coefs)
     
     plt.close('all')
-    plt.plot(dados.index, dados['Isol'], 'o', label='Dados')
-    plt.plot(dados.index, ffit(x), linewidth=3, label='Ajute de ordem ' + str(order))
+    plt.plot(dados.index, dados['Isol'], 'o', label='Real data')
+    plt.plot(dados.index, ffit(x), linewidth=3, label='First-order fitting')
+    #plt.plot(dados.index, ffit(x), linewidth=3, label='Ajute de ordem ' + str(order))
     plt.ylim((0, 0.6))  # set the ylim to bottom, top
     plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=1))
-    plt.title('Ajuste dos dados de isolamento')
+    plt.ylabel('Isolation Index')
+    #plt.title('Ajuste dos dados de isolamento')
     plt.grid()
     plt.legend()
-    plt.xticks(rotation=45)
+    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=7))
+    # plt.xticks(rotation=45)
     if salvar_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
        filename = 'figures/ajuste_isolamento_'+timestr+'.png'

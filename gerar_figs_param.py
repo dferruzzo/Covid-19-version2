@@ -17,21 +17,35 @@ import time
 def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
     
     mu = float(dados_din.loc['mu']['Valor'])
+    #print('mu =', mu)
     gamma = float(dados_din.loc['gamma']['Valor'])
+    #print('gamma =', gamma)
     alpha = float(dados_din.loc['alpha']['Valor'])
+    #print('alpha =', alpha)
     beta1 = float(dados_din.loc['beta1']['Valor'])
+    #print('beta1 =', beta1)
     beta2 = float(dados_din.loc['beta2']['Valor'])
+    #print('beta2 =', beta2)
     beta3 = float(dados_din.loc['beta3']['Valor'])
+    #print('beta3 =', beta3)
     i0 = float(dados_din.loc['i0']['Valor'])
+    #print('i0 =', i0)
     s0 = float(dados_din.loc['s0']['Valor'])
+    #print('s0 =', s0)
     sick0 = float(dados_din.loc['sick0']['Valor'])
+    #print('sick0 =', sick0)
     #
     theta0 = float(dados_iso.loc['theta0']['Valor'])
+    #print('theta0 =', theta0)
     theta1 = float(dados_iso.loc['theta1']['Valor'])
+    #print('theta1 =', theta1)
     #
     N = dados_para_val['Casos'].size
+    print('N =', N)
     tot_pop = dados_para_val['Pop'].to_numpy()[0]
+    print('tot_pop =', tot_pop)
     theta_coef = polynomial.Polynomial([theta0, theta1])
+    print('theta_t =', theta_coef)
     #
     x0 = array([s0, i0, sick0])
     # 
@@ -53,8 +67,8 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     plt.legend()
     if salvar_figs: 
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-        filename = 'figures/validacao_numero_casos_'+timestr+'.png'
-        plt.savefig(filename,  bbox_inches='tight')
+        filename = 'figures/validacao_numero_casos_'+timestr+'.esp'
+        plt.savefig(filename, format='eps', bbox_inches='tight')
     #plt.show()
     #
     plt.figure()
@@ -70,7 +84,8 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     # plt.xticks(rotation=45)
     if salvar_figs:
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-        filename = 'figures/validacao_isolamento_'+timestr+'.png'
-        plt.savefig(filename,  bbox_inches='tight')
+        filename = 'figures/validacao_isolamento_'+timestr+'.eps'
+        plt.savefig(filename, format='eps', bbox_inches='tight')
+
     plt.show()
     return None

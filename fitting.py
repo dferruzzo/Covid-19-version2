@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pprint
 
-# TODO: 1. Calcular o erro quadrático médio no ajuste de parâmetros e na figura 6
+# TODO: 1. [DONE] Calcular o erro quadrático médio no ajuste de parâmetros e na figura 6
 
 def fitting(dados_fit_isol, dados, salvar_figs=True):
     #
@@ -71,14 +71,16 @@ def fitting(dados_fit_isol, dados, salvar_figs=True):
     popt, pvoc = optimize.curve_fit(f_adj, tempo, casos / tot_pop, p0, sigma, absolute_sigma, check_finite, bounds, method, jac)
     perr = sqrt(diag(pvoc))
     #
+    print('popt =',popt)
+    #
     gamma = popt[0]
     alpha = popt[1]
     beta1 = popt[2]
     beta2 = popt[3]
     beta3 = popt[4]
-    i0 = popt[5]
-    s0 = 1-i0-sick0
-    x0 = array([s0, i0, sick0])
+    i0 = popt[5]      # População inicial de infectados não reportados i(0) estimada
+    s0 = 1-i0-sick0   # a população dos infectados reportados é conhecida
+    x0 = array([s0, i0, sick0]) # a população dos recuperados r(0) é zero.
     #print('x0 =',x0)
     # rodando Runge-Kutta de 4ta ordem de passo fixo. Testando o ajuste
     # parameters

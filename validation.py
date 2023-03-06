@@ -43,16 +43,17 @@ def validation(dados_fit_isol,  dados_fit_din, dados_para_fit, dados_para_val, s
         x0, t0, tf, h)
     #
     # 1. Gráfico dos dados para validação
-    plt.plot(dados_para_val.index, dados_para_val['Casos'], 'o', label='Validação')
+    plt.plot(dados_para_val.index, dados_para_val['Casos'], 'o', label='Validation')
     #
     # 2. Gráfico dos dados para ajuste
-    plt.plot(dados_para_fit.index, dados_para_fit['Casos'], 'o', label='Ajuste')
+    plt.plot(dados_para_fit.index, dados_para_fit['Casos'], 'o', label='Fitting')
 
     # 3. Gráfico da curva ajustada
-    plt.plot(dados_para_val.index, sol[:, 2] * tot_pop, linewidth=3, label='Otimização', color="green")
+    plt.plot(dados_para_val.index, sol[:, 2] * tot_pop, linewidth=3, label='Model', color="green")
     #
     plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=1))
-    plt.title('Número de casos')
+    #plt.title('Número de casos')
+    plt.ylabel('Confirmed cases')
     plt.grid()
     plt.legend()
     # 

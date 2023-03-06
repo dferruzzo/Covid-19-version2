@@ -41,7 +41,7 @@ def save_all(dados_fit_isol, dados_fit_din, apresentar=False, verificar=False):
     # 
     # Esta parte do código Verifica a qualidade dos dados produzidos pelo ajuste e dos dados recuperados depois de salvar
     # -------------------------------------------------------------------------------------------------------------------
-    if verifica:
+    if verificar:
         # TODO [ ]: Escrever programa para verificar se após guardar e carregar todos os valores são os mesmos
         # Compararação dos dados do ajuste no índice de isolamento
         # --------------------------------------------------------
