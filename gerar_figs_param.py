@@ -67,7 +67,7 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     plt.legend()
     if salvar_figs: 
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-        filename = 'figures/validacao_numero_casos_'+timestr+'.esp'
+        filename = 'figures/validacao_numero_casos_'+timestr+'.eps'
         plt.savefig(filename, format='eps', bbox_inches='tight')
     #plt.show()
     #

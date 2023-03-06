@@ -13,21 +13,24 @@ from myfunctions import rk4, rhs_vac_1
 from numpy import array, polynomial, linspace, meshgrid, shape, empty, nan, max
 import matplotlib.pyplot as plt
 
-def mapa1(params_df, salvar_figs=False):
-    params_val = params_df['Valor'].to_numpy()
-    mu = params_val[0]
-    gamma = params_val[1]
-    alpha = params_val[2]
-    beta1 = params_val[3]
-    beta2 = params_val[4]
-    beta3 = params_val[5]
-    theta0 = params_val[6]
-    theta1 = params_val[7]
-    s0 = params_val[8]
-    i0 = params_val[9]
-    sick0 = params_val[10]
-    tot_pop = params_val[11]
-    #theta_coef = polynomial.Polynomial([theta0, theta1])
+def mapa1(dados_para_val, dados_iso, dados_din, salvar_figs=False):
+    
+    mu = float(dados_din.loc['mu']['Valor'])
+    gamma = float(dados_din.loc['gamma']['Valor'])
+    alpha = float(dados_din.loc['alpha']['Valor'])
+    beta1 = float(dados_din.loc['beta1']['Valor'])
+    beta2 = float(dados_din.loc['beta2']['Valor'])
+    beta3 = float(dados_din.loc['beta3']['Valor'])
+    i0 = float(dados_din.loc['i0']['Valor'])
+    s0 = float(dados_din.loc['s0']['Valor'])
+    sick0 = float(dados_din.loc['sick0']['Valor'])
+    #
+    
+    theta0 = float(dados_iso.loc['theta0']['Valor'])
+    theta1 = float(dados_iso.loc['theta1']['Valor'])
+    # theta_coef = polynomial.Polynomial([theta0, theta1])
+    
+    tot_pop = tot_pop = dados_para_val['Pop'].to_numpy()[0]
  
     x0 = array([s0, i0, sick0])
     t0 = 0

@@ -60,8 +60,8 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     t, sol = rk4(lambda t, x: rhs_vac_theta(t, x, mu, gamma, alpha, theta_coef, beta1, beta2, beta3, omega), x0, t0, tf, h)
     #
     # casos confirmados e vacinação juntos num gráfico.
-    #plt.figure()
     """
+    plt.figure()
     fig, ax1 = plt.subplots()
     ax1.set_xlabel('days')
     ax1.set_ylabel('Confirmed cases', color='tab:blue')
@@ -78,6 +78,7 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     """
     #
     # gráfico dos susceptíveis e dos sicks
+    plt.figure()
     fig, ax1 = plt.subplots()
     ax1.set_xlabel('days')
     ax1.set_ylabel('Confirmed cases', color='tab:blue')
@@ -99,10 +100,10 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     #plt.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
     #plt.xlabel('days')
     #plt.grid()
-    #if salvar_figs:
-    #    timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-    #    filename = 'figures/sims_num_casos_'+timestr+'.png'
-    #    plt.savefig(filename,  bbox_inches='tight')
+    if salvar_figs:
+        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
+        filename = 'figures/sims_num_casos_'+timestr+'.eps'
+        plt.savefig(filename, format='eps', bbox_inches='tight')
     #plt.show()
     # Número de vacinados
     #Num_vacc = trapz(sol[:,0]*omega, dx=1)
