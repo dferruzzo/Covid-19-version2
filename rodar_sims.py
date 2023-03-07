@@ -1,10 +1,18 @@
-"""
-Data: 06/03/2023
-
-Script para realizar simulações do sistema com vacina
-com os parâmetros obtidos pelo ajuste feito.
-
-"""
+# Teste: 07/03/2023
+# Carrega as librarias e funções
+from loaddata import *
+from fit_isol import *
+from fitting import *
+from validation import *
+from save_all import *
+from load_all import *
+from gerar_figs_param import *
+from omega_gamma import *
+from simulations import *
+from mostrar_dados import *
+from mapa1 import *
+import pandas as pd
+from serie_indice_isolamento import *
 from tkinter import W
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -13,8 +21,22 @@ from myfunctions import rhs_vac, rk4, theta_func, rhs_vac_theta, theta_func_1
 from numpy import polynomial, trapz
 import time
 
-
-def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
+def main():
+    salvar_figs = False
+    
+    dados_para_fit, dados_para_val = loaddata()
+    
+    # Carregando dados salvos
+    csv1 = 'dados_iso-2023-03-06-19-38-55.csv'
+    csv2 = 'dados_din-2023-03-06-19-38-55.csv'
+    # pega sempre os últimos gerados
+    #csv1 = filename_iso
+    #csv2 = filename_din
+    dados_fit_isol_saved, dados_fit_din_saved = load_all(csv1, csv2)
+    
+    dados_din = dados_fit_din_saved
+    dados_iso = dados_fit_isol_saved
+    
     mu = float(dados_din.loc['mu']['Valor'])
     gamma = float(dados_din.loc['gamma']['Valor'])
     alpha = float(dados_din.loc['alpha']['Valor'])
@@ -143,4 +165,4 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
        filename = 'figures/sims_fase_'+timestr+'.eps'
        plt.savefig(filename, format='eps', bbox_inches='tight')
     plt.show()
-    return None
+    return
