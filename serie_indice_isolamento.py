@@ -1,4 +1,8 @@
 """
+07/03/2023
+Não é mais necessário. Os dados nãosão suficientes para gerar a figura desejada
+Os dados não estão mais disponíveis para download no site.
+
 Script carregar os dados da série completa do índice de isolamento
 ------------------------------------------------------------------
 Não tem argumentos de entrada.

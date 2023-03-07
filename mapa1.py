@@ -12,6 +12,7 @@ com os valores pico dos sicks.
 from myfunctions import rk4, rhs_vac_1
 from numpy import array, polynomial, linspace, meshgrid, shape, empty, nan, max
 import matplotlib.pyplot as plt
+import time
 
 def mapa1(dados_para_val, dados_iso, dados_din, salvar_figs=False):
     
@@ -59,5 +60,14 @@ def mapa1(dados_para_val, dados_iso, dados_din, salvar_figs=False):
     plt.xlabel('Isolation index')
     plt.ylabel('Vaccination rate')
     plt.plot([0, 0.59],[0.028,0],'--')
+    #
+    plt.annotate('$\omega_{min}$',(0,0.028),(-0.045,0.024),\
+                 arrowprops=dict(arrowstyle="->"))
+    plt.annotate('$\\theta_{c}$',(0.59,0),(0.58,0.004),\
+                 arrowprops=dict(arrowstyle="->"))
+    if salvar_figs:
+       timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
+       filename = 'figures/mapa_'+timestr+'.eps'
+       plt.savefig(filename, format='eps', bbox_inches='tight')    
     plt.show()
     return None 
