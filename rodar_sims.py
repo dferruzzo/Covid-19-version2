@@ -1,4 +1,6 @@
-# Teste: 07/03/2023
+# Data: 07/03/2023
+# Script para produzir as figuras 7 e 8
+#
 # Carrega as librarias e funções
 from loaddata import *
 from fit_isol import *
@@ -64,112 +66,60 @@ print('  theta crítico =', theta_c)
 print('  omega min =', omega_min)
 print('  m =', m)
 print('  b =', b)
-#theta_test = 0.45
-theta_test = 0.59
+
 omega_test = omega_theta(theta_test)
 print('  theta_test =',theta_test)
 print('  omega(theta)=', omega_test)
 print('\n')
 #
-omega = 0.00
-#
+
 x0 = array([s0, i0, sick0])
-# 
 t0 = 0
 tf = 1500
 h = 1
-#t, sol = rk4(lambda t, x: rhs_vac(t, x, mu, gamma, alpha, theta_coef, beta1, beta2, beta3, omega), x0, t0, tf, h)
+
+# Esses valores de theta e omega são utilizados para produzir a fig 7
+# é preciso comentar toda essa parte para produzir a figura 8
+"""
+theta_test = 0.59 
+omega = 0.00
 t, sol = rk4(lambda t, x: rhs_vac_1(t, x, mu, gamma, alpha, theta_test, beta1, beta2, beta3, omega), x0, t0, tf, h)
-#t, sol = rk4(lambda t, x: rhs_vac_theta(t, x, mu, gamma, alpha, theta_coef, beta1, beta2, beta3, omega), x0, t0, tf, h)
 #
-# casos confirmados e vacinação juntos num gráfico.
 plt.figure()
 plt.plot(t[0:1400], sol[0:1400,2]*tot_pop, color='tab:blue')
 plt.grid()
 plt.ylabel('Confirmed cases')
 plt.xlabel('days')
-
-"""
-plt.figure()
-fig, ax1 = plt.subplots()
-ax1.set_xlabel('days')
-ax1.set_ylabel('Confirmed cases', color='tab:blue')
-ax1.plot(t, sol[:,2]*tot_pop, color='tab:blue')
-ax1.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
-ax1.tick_params(axis='y', labelcolor='tab:blue')
-
-ax2 = ax1.twinx()
-ax2.set_ylabel('Percentage of vaccinates (%)', color='tab:orange')
-ax2.plot(t, sol[:,0]*omega*100, color='tab:orange')
-ax2.tick_params(axis='y', labelcolor='tab:orange')
-ax2.xaxis.get_visible()
-ax2.grid('x')
-"""
-#
-# gráfico dos susceptíveis e dos sicks
-#plt.figure()
-#fig, ax1 = plt.subplots()
-#ax1.set_xlabel('days')
-#ax1.set_ylabel('Confirmed cases')#, color='tab:blue')
-#ax1.plot(t, sol[:,2]*tot_pop, color='tab:blue')
-#ax1.plot(t[0:1000], sol[0:1000,2]*tot_pop, color='tab:blue')
-#ax1.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
-#ax1.tick_params(axis='y', labelcolor='tab:blue')
-
-#ax2 = ax1.twinx()
-#ax2.set_ylabel('Susceptivel population', color='tab:orange')
-#ax2.plot(t[0:1000], sol[0:1000,0]*tot_pop, color='tab:orange')
-#ax2.plot(t, sol[:,0]*tot_pop, color='tab:orange')
-#ax2.tick_params(axis='y', labelcolor='tab:orange')
-#ax2.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
-#ax2.xaxis.get_visible()
-#ax2.grid('x')    
-#plt.title('Número de casos confirmados, $\omega=$'+str(omega))
-#plt.ylabel('Confirmed cases')
-#plt.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
-#plt.xlabel('days')
-#plt.grid()
 if salvar_figs:
     timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
     filename = 'figures/sims_confirmed_cases_'+timestr+'.eps'
     plt.savefig(filename, format='eps', bbox_inches='tight')
 plt.show()
-# Número de vacinados
-#Num_vacc = trapz(sol[:,0]*omega, dx=1)
-#print('Porcentagem acumulado de vacinados =', Num_vacc)
-#plt.figure()
-#plt.plot(t, sol[:,0]*omega*100)
-#plt.xlabel('days')
-#plt.ylabel('Percentage of vaccinated')
-#plt.grid()
-#
-# Isolamento
-#plt.figure()
-#plt.plot(t[0:1000], theta_func_1(t[0:1000]))
-#plt.grid()
-#plt.title('Índice de Isolamento')
-#plt.ylabel('Isolation Index')
-#plt.xlabel('dias')
-#plt.axis([0, 1000, 0, 0.6])
-#if salvar_figs:
-#   timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-#   filename = 'figures/sims_isolamento_'+timestr+'.png'
-#   plt.savefig(filename,  bbox_inches='tight')
-#plt.show()
-
-# Diagrama de fase sicks x susceptíveis
 """
+
+# Esses valores de theta e onega são utilizados para produzir a fig 8
+# é preciso comentar toda essa parte para produzir a figura 7
+theta_test = 0.0 
+omega = 0.028
+t, sol = rk4(lambda t, x: rhs_vac_1(t, x, mu, gamma, alpha, theta_test, beta1, beta2, beta3, omega), x0, t0, tf, h)
+#
 plt.figure()
-#plt.plot(sol[:,2], sol[:,0])
-plt.plot(sol[:,2]*tot_pop, sol[:,0]*tot_pop)
-plt.grid()
-plt.xlabel('$s_{ick}(t)$')
-#ax2.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
-plt.ticklabel_format(axis='x',scilimits=(0,0),style='scientific')
-plt.ylabel('$s(t)$')
+fig, ax1 = plt.subplots()
+ax1.set_xlabel('days')
+ax1.set_ylabel('Confirmed cases', color='tab:blue')
+ax1.plot(t[0:400], sol[0:400,2]*tot_pop, color='tab:blue')
+ax1.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
+ax1.tick_params(axis='y', labelcolor='tab:blue')
+
+ax2 = ax1.twinx()
+ax2.set_ylabel('Percentage of vaccinates (%)', color='tab:orange')
+ax2.plot(t[0:400], sol[0:400,0]*omega*100, color='tab:orange')
+ax2.tick_params(axis='y', labelcolor='tab:orange')
+ax2.xaxis.get_visible()
+ax2.grid('x')
 if salvar_figs:
     timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-    filename = 'figures/sims_fase_'+timestr+'.eps'
+    filename = 'figures/sims_confirmed_cases_'+timestr+'.eps'
     plt.savefig(filename, format='eps', bbox_inches='tight')
-"""
-#plt.show()
+plt.show()
+
