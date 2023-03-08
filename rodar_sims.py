@@ -21,7 +21,7 @@ from myfunctions import rhs_vac, rk4, theta_func, rhs_vac_theta, theta_func_1
 from numpy import polynomial, trapz
 import time
 
-salvar_figs = False
+salvar_figs = True
 
 dados_para_fit, dados_para_val = loaddata()
 
@@ -83,6 +83,12 @@ t, sol = rk4(lambda t, x: rhs_vac_1(t, x, mu, gamma, alpha, theta_test, beta1, b
 #t, sol = rk4(lambda t, x: rhs_vac_theta(t, x, mu, gamma, alpha, theta_coef, beta1, beta2, beta3, omega), x0, t0, tf, h)
 #
 # casos confirmados e vacinação juntos num gráfico.
+plt.figure()
+plt.plot(t[0:1400], sol[0:1400,2]*tot_pop, color='tab:blue')
+plt.grid()
+plt.ylabel('Confirmed cases')
+plt.xlabel('days')
+
 """
 plt.figure()
 fig, ax1 = plt.subplots()
@@ -102,22 +108,22 @@ ax2.grid('x')
 #
 # gráfico dos susceptíveis e dos sicks
 #plt.figure()
-fig, ax1 = plt.subplots()
-ax1.set_xlabel('days')
-ax1.set_ylabel('Confirmed cases', color='tab:blue')
+#fig, ax1 = plt.subplots()
+#ax1.set_xlabel('days')
+#ax1.set_ylabel('Confirmed cases')#, color='tab:blue')
 #ax1.plot(t, sol[:,2]*tot_pop, color='tab:blue')
-ax1.plot(t[0:1000], sol[0:1000,2]*tot_pop, color='tab:blue')
-ax1.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
-ax1.tick_params(axis='y', labelcolor='tab:blue')
+#ax1.plot(t[0:1000], sol[0:1000,2]*tot_pop, color='tab:blue')
+#ax1.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
+#ax1.tick_params(axis='y', labelcolor='tab:blue')
 
-ax2 = ax1.twinx()
-ax2.set_ylabel('Susceptivel population', color='tab:orange')
-ax2.plot(t[0:1000], sol[0:1000,0]*tot_pop, color='tab:orange')
+#ax2 = ax1.twinx()
+#ax2.set_ylabel('Susceptivel population', color='tab:orange')
+#ax2.plot(t[0:1000], sol[0:1000,0]*tot_pop, color='tab:orange')
 #ax2.plot(t, sol[:,0]*tot_pop, color='tab:orange')
-ax2.tick_params(axis='y', labelcolor='tab:orange')
-ax2.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
+#ax2.tick_params(axis='y', labelcolor='tab:orange')
+#ax2.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
 #ax2.xaxis.get_visible()
-ax2.grid('x')    
+#ax2.grid('x')    
 #plt.title('Número de casos confirmados, $\omega=$'+str(omega))
 #plt.ylabel('Confirmed cases')
 #plt.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
@@ -125,9 +131,9 @@ ax2.grid('x')
 #plt.grid()
 if salvar_figs:
     timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
-    filename = 'figures/sims_num_casos_'+timestr+'.eps'
+    filename = 'figures/sims_confirmed_cases_'+timestr+'.eps'
     plt.savefig(filename, format='eps', bbox_inches='tight')
-#plt.show()
+plt.show()
 # Número de vacinados
 #Num_vacc = trapz(sol[:,0]*omega, dx=1)
 #print('Porcentagem acumulado de vacinados =', Num_vacc)
@@ -166,4 +172,4 @@ if salvar_figs:
     filename = 'figures/sims_fase_'+timestr+'.eps'
     plt.savefig(filename, format='eps', bbox_inches='tight')
 """
-plt.show()
+#plt.show()
