@@ -8,7 +8,7 @@
 """
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from numpy import array
+from numpy import array, sqrt
 from myfunctions import rhs, rk4
 from numpy import polynomial
 import time
@@ -88,4 +88,12 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
         plt.savefig(filename, format='eps', bbox_inches='tight')
 
     plt.show()
+    #Calcular o RMSE para a validação
+    
+    def rmse(predictions, targets):
+        return sqrt(((predictions - targets) ** 2).mean())
+    
+    print('sol[:,2]*tot_pop=',sol[:,2]*tot_pop)
+    print('dados_para_val[Casos]=',dados_para_val['Casos'])
+    print('RMSE validação =', rmse(sol[:, 2] * tot_pop, dados_para_val['Casos']))
     return None
