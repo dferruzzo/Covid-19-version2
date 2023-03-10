@@ -6,7 +6,7 @@ To use this repository, please follow the instructions below:
 
 1. Clone or download the repository to your local machine.
 2. Install the required dependencies as specified in the requirements.txt file.
-3. Run the jupyter notebook file 'SIRSi-Vaccine_Model.ipynb' to reproduce the figures presented in the manuscript.
+3. Run the jupyter notebook file 'main.ipynb' to reproduce the figures presented in the manuscript.
 4. Feel free to modify the parameters in the notebook file to generate different scenarios and compare the results.
 If you have any questions, please do not hesitate to contact the repository owner.
 
