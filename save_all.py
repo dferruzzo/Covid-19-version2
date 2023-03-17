@@ -16,7 +16,7 @@ import time
 from load_all import *
 from parameters import *
 
-def save_all(dados_fit_isol, dados_fit_din, apresentar=False, verificar=False):
+def save_all(dados_fit_isol, dados_fit_din, show=False, verify=False):
     print('\nGuardando todos os dados...')
 
     # criando nome do arquivo para guardar os dados de ajuste do índice de isolamento e para os dados do ajuste da curva dos infectados
@@ -30,7 +30,7 @@ def save_all(dados_fit_isol, dados_fit_din, apresentar=False, verificar=False):
     dados_fit_din_df = pd. DataFrame(list(dados_fit_din.items()), columns = ['Nome','Valor']).set_index('Nome')
     dados_fit_din_df.to_csv(filename_din)
     
-    if apresentar:
+    if show:
         print('Dados ajustados de isolamento:\n', dados_fit_isol_df)    
         print('Dados ajustados para a dinâmica:\n', dados_fit_din_df)
     #
@@ -41,7 +41,7 @@ def save_all(dados_fit_isol, dados_fit_din, apresentar=False, verificar=False):
     # 
     # Esta parte do código Verifica a qualidade dos dados produzidos pelo ajuste e dos dados recuperados depois de salvar
     # -------------------------------------------------------------------------------------------------------------------
-    if verificar:
+    if verify:
         # TODO [ ]: Escrever programa para verificar se após guardar e carregar todos os valores são os mesmos
         # Compararação dos dados do ajuste no índice de isolamento
         # --------------------------------------------------------

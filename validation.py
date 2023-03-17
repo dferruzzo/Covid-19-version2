@@ -16,7 +16,7 @@ from numpy import array
 from myfunctions import rhs, rk4
 
 
-def validation(dados_fit_isol,  dados_fit_din, dados_para_fit, dados_para_val, salvar_figs=True):
+def validation(dados_fit_isol,  dados_fit_din, dados_para_fit, dados_para_val, save_figs=True):
 
     theta_t = dados_fit_isol['theta(t)']
      
@@ -58,7 +58,7 @@ def validation(dados_fit_isol,  dados_fit_din, dados_para_fit, dados_para_val, s
     plt.legend()
     # 
     # Se opção salvar figuras é TRUE,
-    if salvar_figs:
+    if save_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
        filename = 'figures/validacao_'+timestr+'.png'
        plt.savefig(filename,  bbox_inches='tight')

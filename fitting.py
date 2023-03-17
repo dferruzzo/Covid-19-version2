@@ -21,7 +21,7 @@ import pprint
 
 # TODO: 1. [DONE] Calcular o erro quadrático médio no ajuste de parâmetros e na figura 6
 
-def fitting(dados_fit_isol, dados, salvar_figs=True):
+def fitting(dados_fit_isol, dados, save_figs=True):
     #
     print('\nIniciando ajuste de parâmetros')
     print('------------------------------\n')
@@ -115,7 +115,7 @@ def fitting(dados_fit_isol, dados, salvar_figs=True):
     plt.grid()
     plt.legend()
     plt.xticks(rotation=45)
-    if salvar_figs:
+    if save_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
        filename = 'figures/fitting_'+timestr+'.png'
        plt.savefig(filename,  bbox_inches='tight')

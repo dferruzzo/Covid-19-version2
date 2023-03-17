@@ -14,7 +14,7 @@ from numpy import polynomial
 import time
 
 
-def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
+def produce_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, save_figs=True):
     
     mu = float(dados_din.loc['mu']['Valor'])
     #print('mu =', mu)
@@ -65,7 +65,7 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     #plt.title('Número de casos')
     plt.grid()
     plt.legend()
-    if salvar_figs: 
+    if save_figs: 
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
         filename = 'figures/validacao_numero_casos_'+timestr+'.eps'
         plt.savefig(filename, format='eps', bbox_inches='tight')
@@ -82,7 +82,7 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     plt.grid()
     plt.legend()
     # plt.xticks(rotation=45)
-    if salvar_figs:
+    if save_figs:
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
         filename = 'figures/validacao_isolamento_'+timestr+'.eps'
         plt.savefig(filename, format='eps', bbox_inches='tight')
@@ -93,7 +93,7 @@ def gerar_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, salva
     def rmse(predictions, targets):
         return sqrt(((predictions - targets) ** 2).mean())
     
-    print('sol[:,2]*tot_pop=',sol[:,2]*tot_pop)
-    print('dados_para_val[Casos]=',dados_para_val['Casos'])
-    print('RMSE validação =', rmse(sol[:, 2] * tot_pop, dados_para_val['Casos']))
+    #print('sol[:,2]*tot_pop=',sol[:,2]*tot_pop)
+    #print('data_for_val[Cases]=',dados_para_val['Casos'])
+    print('RMSE validation =', rmse(sol[:, 2] * tot_pop, dados_para_val['Casos']))
     return None

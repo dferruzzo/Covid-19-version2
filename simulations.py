@@ -14,7 +14,7 @@ from numpy import polynomial, trapz
 import time
 
 
-def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_figs=True):
+def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, save_figs=True):
     mu = float(dados_din.loc['mu']['Valor'])
     gamma = float(dados_din.loc['gamma']['Valor'])
     alpha = float(dados_din.loc['alpha']['Valor'])
@@ -39,7 +39,7 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     def omega_theta(theta_t):return -m*theta_t+b
     print('\n')
     print('  omega = -m*theta+b')
-    print('  theta crítico =', theta_c) 
+    print('  theta critical =', theta_c) 
     print('  omega min =', omega_min)
     print('  m =', m)
     print('  b =', b)
@@ -101,7 +101,7 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     #plt.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
     #plt.xlabel('days')
     #plt.grid()
-    if salvar_figs:
+    if save_figs:
         timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
         filename = 'figures/sims_num_casos_'+timestr+'.eps'
         plt.savefig(filename, format='eps', bbox_inches='tight')
@@ -123,7 +123,7 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     #plt.ylabel('Isolation Index')
     #plt.xlabel('dias')
     #plt.axis([0, 1000, 0, 0.6])
-    #if salvar_figs:
+    #if save_figs:
     #   timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
     #   filename = 'figures/sims_isolamento_'+timestr+'.png'
     #   plt.savefig(filename,  bbox_inches='tight')
@@ -138,7 +138,7 @@ def simulations(dados_para_fit, dados_para_val, dados_iso, dados_din, salvar_fig
     #ax2.ticklabel_format(axis='y',scilimits=(0,0),style='scientific')
     plt.ticklabel_format(axis='x',scilimits=(0,0),style='scientific')
     plt.ylabel('$s(t)$')
-    if salvar_figs:
+    if save_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
        filename = 'figures/sims_fase_'+timestr+'.eps'
        plt.savefig(filename, format='eps', bbox_inches='tight')

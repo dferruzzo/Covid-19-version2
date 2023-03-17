@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pprint
 
-def fit_isol(dados, order=2, salvar_figs=True) -> object:
+def fit_isol(dados, order=2, save_figs=True) -> object:
     """
 
     Returns
@@ -21,7 +21,7 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
     object
     """
     # Ajustando os polinômios com dados crus
-    print('Ajuste do polinômio de ordem', order, 'para os dados de isolamento.')
+    print('Adjustment of the polynomial order', order, 'for isolation data.')
     poly_order = order
     x = dados['Idx'].to_numpy()
     coefs, stats = poly.polyfit(x, dados['Isol'].to_numpy(), poly_order, full=True)
@@ -42,7 +42,7 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
     plt.legend()
     plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=7))
     # plt.xticks(rotation=45)
-    if salvar_figs:
+    if save_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
        filename = 'figures/ajuste_isolamento_'+timestr+'.png'
        plt.savefig(filename,  bbox_inches='tight')
@@ -60,8 +60,8 @@ def fit_isol(dados, order=2, salvar_figs=True) -> object:
 
     #print('testando a função thets(t), t= ', x[0]-10, 'theta(t>t_max) =', ffit(x[0]-10))
     
-    print('\nDados após ajuste do índice de isolamento:\n')
+    print('\nData after adjustment of the isolation index:\n')
     pprint.pprint(dados, sort_dicts=False)
-    print('\nAjuste do índice de isolamento finalizado... OK!')
+    print('\nAdjustment of isolation index done... OK!')
     # pronto para entregar na saída o dicionário 'dados'
     return dados

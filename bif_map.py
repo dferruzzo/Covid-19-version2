@@ -1,5 +1,5 @@
 """
-mapa1(params_df, salvar_figs=False)
+bif_map(params_df, save_figs=False)
 
 A função recebe os parâmetros do modelo,
 cria uma grade de valores theta e omega
@@ -14,7 +14,7 @@ from numpy import array, polynomial, linspace, meshgrid, shape, empty, nan, max
 import matplotlib.pyplot as plt
 import time
 
-def mapa1(dados_para_val, dados_iso, dados_din, salvar_figs=False):
+def bif_map(dados_para_val, dados_iso, dados_din, save_figs=False):
     
     mu = float(dados_din.loc['mu']['Valor'])
     gamma = float(dados_din.loc['gamma']['Valor'])
@@ -65,7 +65,7 @@ def mapa1(dados_para_val, dados_iso, dados_din, salvar_figs=False):
                  arrowprops=dict(arrowstyle="->"))
     plt.annotate('$\\theta_{c}$',(0.59,0),(0.58,0.004),\
                  arrowprops=dict(arrowstyle="->"))
-    if salvar_figs:
+    if save_figs:
        timestr = time.strftime("%Y-%m-%d-%H-%M-%S")
        filename = 'figures/mapa_'+timestr+'.eps'
        plt.savefig(filename, format='eps', bbox_inches='tight')    
