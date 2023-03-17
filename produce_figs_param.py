@@ -95,5 +95,5 @@ def produce_figs_param(dados_para_fit, dados_para_val, dados_iso, dados_din, sav
     
     #print('sol[:,2]*tot_pop=',sol[:,2]*tot_pop)
     #print('data_for_val[Cases]=',dados_para_val['Casos'])
-    print('RMSE validation =', rmse(sol[:, 2] * tot_pop, dados_para_val['Casos']))
+    print('RMSE validation =', rmse(sol[:, 2] * tot_pop, dados_para_val['Casos'])/tot_pop)
     return None
