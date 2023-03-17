@@ -12,11 +12,11 @@ import pandas as pd
 
 def load_all(csv1, csv2):
     #
-    print('\nCarregando dados do arquivo:', csv1)
+    print('\nLoading data from file:', csv1)
     dados_iso = pd.read_csv(csv1).set_index('Nome') 
     #
-    print('\nCarregando dados do arquivo:', csv2)
+    print('\nLoading data from file:', csv2)
     dados_din = pd.read_csv(csv2).set_index('Nome')
     #
-    print('\nDados carregados com sucesso...OK!\n')
+    print('\nData loaded successfully...OK!\n')
     return dados_iso, dados_din

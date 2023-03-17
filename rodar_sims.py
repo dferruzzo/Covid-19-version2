@@ -97,7 +97,7 @@ if salvar_figs:
 plt.show()
 """
 
-# Esses valores de theta e onega são utilizados para produzir a fig 8
+# Esses valores de theta e omega são utilizados para produzir a fig 8
 # é preciso comentar toda essa parte para produzir a figura 7
 theta_test = 0.0 
 omega = 0.028
