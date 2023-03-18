@@ -19,7 +19,7 @@ def loaddata() -> object:
     object
     """
     # carregando data do índice de isolamento
-    print('Carregando data...')
+    print('Loading data...')
     saopaulo_isol_data = pd.read_csv("data/SaoPaulo_isolamento.csv")
     saopaulo_isol_df = pd.DataFrame(saopaulo_isol_data)
     saopaulo_isol_df.drop(labels='Unnamed: 0', axis=1, inplace=True)
