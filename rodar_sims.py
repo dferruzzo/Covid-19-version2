@@ -23,16 +23,14 @@ from myfunctions import rhs_vac, rk4, theta_func, rhs_vac_theta, theta_func_1
 from numpy import polynomial, trapz
 import time
 
-salvar_figs = True
+salvar_figs = False
 
 dados_para_fit, dados_para_val = loaddata()
 
 # Carregando dados salvos
-csv1 = 'dados_iso-2023-03-06-19-38-55.csv'
-csv2 = 'dados_din-2023-03-06-19-38-55.csv'
-# pega sempre os últimos gerados
-#csv1 = filename_iso
-#csv2 = filename_din
+csv1 = 'data_iso-2023-03-06-19-38-55.csv'
+csv2 = 'data_dyn-2023-03-06-19-38-55.csv'
+
 dados_fit_isol_saved, dados_fit_din_saved = load_all(csv1, csv2)
 
 dados_din = dados_fit_din_saved
